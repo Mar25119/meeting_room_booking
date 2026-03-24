@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BookingRoom - Бронирование переговорных</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🏢 BookingRoom</h1>
+            <div id="user-info" class="user-info">Гость</div>
+        </header>
+
+        <!-- Экран входа -->
+        <div id="login-screen" class="screen">
+            <h2>Вход в систему</h2>
+            <input type="text" id="username" placeholder="Ваше имя">
+            <select id="role">
+                <option value="employee">Сотрудник</option>
+                <option value="admin">Администратор</option>
+            </select>
+            <button onclick="login()">Войти</button>
+        </div>
+
+        <!-- Основной экран -->
+        <div id="main-screen" class="screen hidden">
+            <nav class="nav-tabs">
+                <button class="tab active" onclick="showTab('rooms')">🚪 Комнаты</button>
+                <button class="tab" onclick="showTab('my-bookings')">📅 Мои бронирования</button>
+                <button class="tab admin-only hidden" onclick="showTab('all-bookings')">📋 Все бронирования</button>
+                <button class="tab admin-only hidden" onclick="showTab('admin-rooms')">⚙️ Управление комнатами</button>
+            </nav>
+
+            <!-- Вкладка: Комнаты -->
+            <div id="rooms-tab" class="tab-content active">
+                <h2>Доступные переговорные комнаты</h2>
+                <div id="rooms-list" class="rooms-grid"></div>
+            </div>
+
+            <!-- Вкладка: Мои бронирования -->
+            <div id="my-bookings-tab" class="tab-content">
+                <h2>Мои бронирования</h2>
+                <div id="my-bookings-list" class="bookings-list"></div>
+            </div>
+
+            <!-- Вкладка: Все бронирования (админ) -->
+            <div id="all-bookings-tab" class="tab-content">
+                <h2>Все бронирования</h2>
+                <div id="all-bookings-list" class="bookings-list"></div>
+            </div>
+
+            <!-- Вкладка: Управление комнатами (админ) -->
+            <div id="admin-rooms-tab" class="tab-content">
+                <h2>Управление комнатами</h2>
+                <div class="card">
+                    <h3>Добавить комнату</h3>
+                    <input type="text" id="new-room-name" placeholder="Название (например: Переговорка А)">
+                    <input type="number" id="new-room-capacity" placeholder="Вместимость (чел)">
+                    <input type="text" id="new-room-equipment" placeholder="Оборудование (проектор, ТВ...)">
+                    <button onclick="addRoom()">Добавить комнату</button>
+                </div>
+                <div id="admin-rooms-list" class="rooms-list"></div>
+            </div>
+        </div>
+
+        <!-- Модальное окно бронирования -->
+        <div id="booking-modal" class="modal hidden">
+            <div class="modal-content">
+                <h3>Забронировать комнату</h3>
+                <p id="modal-room-name"></p>
+                <input type="hidden" id="booking-room-id">
+                <input type="date" id="booking-date">
+                <input type="time" id="booking-time-start">
+                <input type="time" id="booking-time-end">
+                <input type="text" id="booking-purpose" placeholder="Цель встречи">
+                <div class="modal-buttons">
+                    <button onclick="confirmBooking()">Забронировать</button>
+                    <button class="cancel" onclick="closeModal()">Отмена</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
